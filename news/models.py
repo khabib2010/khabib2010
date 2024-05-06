@@ -9,11 +9,11 @@ class Category(models.Model):
         return self.name
 
 class News(models.Model):
-    title=models.CharField(max_length=100)
-    text=models.TextField()
+    title=models.CharField(max_length=100, verbose_name='sarlavha')
+    text=models.TextField(verbose_name='Matn')
     rasm=models.ImageField(upload_to='rasmlar/',null=True)
     author=models.ForeignKey(User,on_delete=models.CASCADE)
-    tur=models.ForeignKey(Category,on_delete=models.CASCADE)
+    tur=models.ForeignKey(Category,on_delete=models.CASCADE,verbose_name='Yangilik Turi')
     created=models.DateTimeField(auto_now_add=True)
     prasmotr=models.PositiveIntegerField(default=0)
     like=models.ManyToManyField(User,related_name='likes')

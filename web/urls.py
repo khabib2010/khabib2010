@@ -14,7 +14,6 @@ urlpatterns = [
     path("news/create/",createNews,name='create_news'),
     path('detail/<int:id>/', detail, name='detail'),
     path('edit/<int:id>/',editnews,name='editnews'),
-
     
     path('login/', Login, name='login'),
     path('logout/', Logout, name='logout'),

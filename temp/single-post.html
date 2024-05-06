@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with JoeBLog landing page.">
+    <meta name="author" content="Devcrud">
+    <title>JoeBLog | Free Bootstrap 4.3.x template</title>
+    <!-- font icons -->
+    <link rel="stylesheet" href="{% static 'assets/vendors/themify-icons/css/themify-icons.css' %}">
+    <!-- Bootstrap + JoeBLog main styles -->
+	<link rel="stylesheet" href="{% static 'assets/css/joeblog.css' %}">
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+    
+
+    <section class="container">
+        <div class="page-container">
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="card">
+                    <div class="card-header pt-0">
+                        <h3 class="card-title mb-4">{{one.title}}</h3>
+                        <div class="blog-media mb-4">
+                            <img src="{{one.rasm.url}}" alt="" class="w-100">
+                            <a href="#" class="badge badge-primary">{{one.tur}}</a> 
+                        </div>  
+                        <small class="small text-muted">
+                            <a href="#" class="text-muted">ko'rishlar soni-{{one.prasmotr}}</a>
+                            <span class="px-2">·</span>
+                            <span>{{one.created}}</span>
+                            <span class="px-2">·</span>
+                            <a href="#" class="text-muted">{{one.comments.count}}-comment yozilgan</a>
+                        </small>
+                    </div>
+                    <div class="card-body border-top">
+                        {{one.text}}
+                    </div>
+<!--comentni boshlanishi-->    
+                    <div class="card-footer">
+                         <h6 class="mt-5 mb-3 text-center"><a href="#" class="text-dark">{{one.comments.count}}</a></h6>
+                        <hr>
+                    </div>                  
+                </div> 
+                    </div>
+                    <div class="col-3">
+                                    <!-- Sidebar -->
+                        <div class="page-sidebar" >
+                            <h1>-- izoh yozing</h1>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                {{form.as_p}}
+                                <button type="submit">sqalash</button>
+                            </form>
+                            <br>
+                            <h1><a href="{% url 'editnews' one.id %}" style="color: blue;">Yangilikni tahrirlash</a></h1>
+                        </div>
+                    </div>
+                </div>
+                
+
+           
+        </div>
+    </section>
+
+    <!-- End of Page Footer -->
+
+	<!-- core  -->
+    <script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
+    <script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+
+    <!-- JoeBLog js -->
+    <script src="assets/js/joeblog.js"></script>
+
+</body>
+</html>

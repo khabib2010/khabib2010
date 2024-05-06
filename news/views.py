@@ -13,49 +13,48 @@ def Logout(request):
     logout(request)
     return redirect('home')
 
-
 def Login(request):
-    # print(request.user)
     login_form = LoginForm()
     if request.POST:
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
-            # print(login_form.cleaned_data)
             username = login_form.cleaned_data['username']
             password = login_form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
-                print(request.user)
                 login(request, user)
-                print(request.user)
-                
+
                 return redirect('home')
-    return render(request, 'login.html', {'form': login_form})
+    return render(request, 'create.html', {'form': login_form,'funk':'Login'})
 
 def home(request):
-    if request.POST:
-        id=request.POST['id']
-        one_news=News.objects.get(id=id)
-        if request.user in one_news.like.all():
-            one_news.like.remove(request.user)
-        else:
-            one_news.like.add(request.user)
+    if request.user.is_authenticated:
+        if request.POST:
+            id=request.POST['id']
+            one_news=News.objects.get(id=id)
+            if request.user in one_news.like.all():
+                one_news.like.remove(request.user)
+            else:
+                one_news.like.add(request.user)
 
-    hammasi=News.objects.all()
-    search=request.GET.get('search')
-    if search:
-        hammasi=News.objects.filter(title__icontains=search)
-    hammasi=hammasi[::-1]
-    context={'news':hammasi}
-    return render(request,"index.html",context)
+        hammasi=News.objects.all()
+        search=request.GET.get('search')
+        if search:
+            hammasi=News.objects.filter(title__icontains=search)
+        hammasi=hammasi[::-1]
+        context={'news':hammasi}
+        return render(request,"no-sidebar.html",context)
+    else:
+        return Login(request)
 
 def detail(request, id):
     a = News.objects.get(id = id)    
     form=CommentForm()
+    a.prasmotr +=1
+    a.save()
     if request.POST:
         if not request.user.is_authenticated:
             return redirect('login')
-            print('------------\n--------')
         form=CommentForm(request.POST)
         if form.is_valid():
             Comment.objects.create(
@@ -64,7 +63,7 @@ def detail(request, id):
                 news=a
                 )
             return redirect('detail',a.id)
-    return render(request, 'detail.html', {'one': a, 'form': form})
+    return render(request, 'single-post.html', {'one': a, 'form': form})
 
 def createCategory(request):
     form=CategoryForm()
@@ -73,7 +72,7 @@ def createCategory(request):
         if form.is_valid():
             form.save()
             return redirect('home')
-    return render(request,'create.html',{'form':form})
+    return render(request,'create.html',{'form':form,'funk':'tur'})
 
 
 def user_register(request):
@@ -85,8 +84,9 @@ def user_register(request):
             parol=form.cleaned_data['password']
             user.set_password(parol)
             user.save()
+            login(request, user)
             return redirect('home')
-    return render(request,'create.html',{'form':form})
+    return render(request,'create.html',{'form':form,'funk':'register'})
 
 
 
@@ -103,7 +103,8 @@ def createNews(request):
                 rasm=form.cleaned_data['rasm']
                 )
             return redirect("home")
-    return render(request, 'create.html',{'form':form})
+    print(dir(form))
+    return render(request, 'create.html',{'form':form,'funk':'news'})
 
 
 def editnews(request,id):
@@ -120,7 +121,7 @@ def editnews(request,id):
             edit.rasm=form.cleaned_data['rasm']
             edit.save()
             return redirect('detail',edit.id)
-    return render(request,'edit.html',{'form':form})
+    return render(request,'create.html',{'form':form,'funk':'edit'})
     
 
 def createComment(request,id):
