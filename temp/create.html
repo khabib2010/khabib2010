@@ -19,20 +19,21 @@
                         {% csrf_token %}
                         {% for i in form %}
                         <div >
-                            <label for="#{{i.label}}">{{i.label}}</label>
+                            <label for="{{i.label}}">{{i.label}}</label>
                             <span id="{{i.label}}">
                                 {{i}}
                             </span>
                         </div><br>
                         {% endfor %}
-                        <button type="submit">yaratish</button>
+                        <button type="submit">Saqlash</button>
                     </form>
                     <br>
                     
                      <h1>
-                        <a href="{% url 'user_register' %}">registratsiyadan o'ting</a></h1>
+                    
+                    <a href="{% url 'user_register' %}">registratsiyadan o'ting</a></h1>
 
-                     <a href="{% url 'login' %}">login</a>
+                    <a href="{% url 'login' %}">login</a>
                      
                 </center>
             

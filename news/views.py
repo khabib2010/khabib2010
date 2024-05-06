@@ -25,7 +25,7 @@ def Login(request):
                 login(request, user)
 
                 return redirect('home')
-    return render(request, 'create.html', {'form': login_form,'funk':'Login'})
+    return render(request, 'create.html', {'form': login_form,'funk':"Akkauntiz yo'qmi unda ragistratsiya qiling"})
 
 def home(request):
     if request.user.is_authenticated:
@@ -72,7 +72,7 @@ def createCategory(request):
         if form.is_valid():
             form.save()
             return redirect('home')
-    return render(request,'create.html',{'form':form,'funk':'tur'})
+    return render(request,'create.html',{'form':form,'funk':''})
 
 
 def user_register(request):
@@ -86,7 +86,7 @@ def user_register(request):
             user.save()
             login(request, user)
             return redirect('home')
-    return render(request,'create.html',{'form':form,'funk':'register'})
+    return render(request,'create.html',{'form':form,'funk':'allaqachon akauntiz bormi unda login qiling'})
 
 
 
@@ -104,7 +104,7 @@ def createNews(request):
                 )
             return redirect("home")
     print(dir(form))
-    return render(request, 'create.html',{'form':form,'funk':'news'})
+    return render(request, 'create.html',{'form':form,'funk':''})
 
 
 def editnews(request,id):
@@ -121,7 +121,7 @@ def editnews(request,id):
             edit.rasm=form.cleaned_data['rasm']
             edit.save()
             return redirect('detail',edit.id)
-    return render(request,'create.html',{'form':form,'funk':'edit'})
+    return render(request,'create.html',{'form':form,'funk':''})
     
 
 def createComment(request,id):
@@ -137,4 +137,20 @@ def createComment(request,id):
                 )
             return redirect('detail',news.id)
     return render(request, 'detail.html',{'form':form})            
+
+def password_edit(request):
+    form=PasswordForm()
+
+    if request.POST:
+        form=PasswordForm(request.POST)
+        p_1=form.data['password_1']
+        p_2=form.data['password_2']
+        user=request.user
+        if user.check_password(p_1):
+            user.set_password(p_2)
+            user.save()
+            return redirect('home')
+    return render(request,'create.html',{'form':form,'funk':"'p_1' ga avvalgi parolni 'p_2' ga yangi parolni kiritng"})
+
+
 

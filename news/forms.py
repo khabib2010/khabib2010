@@ -47,5 +47,7 @@ class CommentForm(forms.ModelForm):
         fields=['izoh']
 
 
-
+class PasswordForm(forms.Form):
+    password_1=forms.CharField(max_length=15)
+    password_2=forms.CharField(max_length=15)
 

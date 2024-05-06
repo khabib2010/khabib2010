@@ -17,6 +17,7 @@ urlpatterns = [
     
     path('login/', Login, name='login'),
     path('logout/', Logout, name='logout'),
-    path('delet/<int:id>',delet,name='delet')
+    path('delet/<int:id>',delet,name='delet'),
+    path('parolni_ozgartirish',password_edit,name='parolni_ozgartirish')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
